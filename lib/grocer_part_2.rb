@@ -4,6 +4,20 @@ def apply_coupons(cart, coupons)
   # Consult README for inputs and outputs
   #
   # REMEMBER: This method **should** update cart
+   index = 0
+  while index < coupons.count do
+    coupon = coupons[index]
+    item_with_coupon = find_item_by_name_in_collection(coupon[:item], cart)
+    item_is_in_basket = !!item_with_coupon
+    bulk_order = item_is_in_basket && item_with_coupon[:count] >= coupon[:num]
+
+    if item_is_in_basket and bulk_order
+      apply_coupon_to_cart(item_with_coupon, coupon, cart)
+    end
+    index += 1
+  end
+
+  cart
 end
 
 def apply_clearance(cart)
